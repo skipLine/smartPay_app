@@ -19,6 +19,15 @@ group :development do
   gem 'faker', '0.3.1'
 end
 
+group :production do
+  # gems specifically for Heroku go here
+  gem "pg"
+end
+
+group :development, :test do
+  gem 'sqlite3', '1.3.4'
+end
+
 group :assets do
   gem 'execjs'
   gem 'therubyracer', :platforms => :ruby
