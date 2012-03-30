@@ -30,6 +30,8 @@ GEM
       activesupport (= 3.1.0)
     activesupport (3.1.0)
       multi_json (~> 1.0)
+    amazon-ec2 (0.9.17)
+      xml-simple (>= 1.0.12)
     annotate (2.4.0)
     arel (2.2.3)
     bcrypt-ruby (3.0.1)
@@ -135,11 +137,13 @@ GEM
       rack (>= 1.0)
       rack-test (>= 0.5.3)
     will_paginate (3.0.pre2)
+    xml-simple (1.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  amazon-ec2
   annotate (= 2.4.0)
   coffee-rails (~> 3.1.0)
   execjs
@@ -147,6 +151,7 @@ DEPENDENCIES
   faker (= 0.3.1)
   gravatar_image_tag (= 1.0.0.pre2)
   jquery-rails
+  mail
   pg
   rails (= 3.1.0)
   rspec-rails (= 2.6.1)

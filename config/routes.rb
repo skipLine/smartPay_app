@@ -1,4 +1,14 @@
 SmartPayApp::Application.routes.draw do
+  resources :supports, :only => [:new, :create]
+
+  resources :user_1s
+
+  get "pages/home"
+
+  get "pages/contact"
+
+  get "pages/about"
+
   resources :foodorders
 
   resources :orders

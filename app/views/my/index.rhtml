@@ -1,0 +1,38 @@
+<h1>EC2 Test#index</h1>
+
+<h1>Sample 1 - debug() view</h1>
+
+<%= debug(@ec2_images_amazon) %>
+
+<h1>Sample 2 - Build a table</h1>
+
+<table border='1'>
+  <tr>
+    <th>image.imageId</th>
+    <th>image.imageLocation</th>
+    <th>image.imageOwnerId</th>
+    <th>image.imageState</th>
+    <th>image.isPublic</th>
+  </tr>
+
+  <% for image in @ec2_images_amazon %>
+    <tr>
+      <td><%=h image.imageId %></td>
+      <td><%=h image.imageLocation %></td>
+      <td><%=h image.imageOwnerId %></td>
+      <td><%=h image.imageState %></td>
+      <td><%=h image.isPublic %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h1>Sample 3 - Iterate</h1>
+
+<% @ec2_images_amazon.each do |image| %>
+  <% image.each_pair do |key, value| %>
+    <% unless key == 'parent' %>
+      <%= "#{key} => #{value}" %><br />
+    <% end %>
+  <% end %>
+  <br />
+<% end %>
