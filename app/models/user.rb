@@ -1,5 +1,7 @@
+require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :address, :phone
+  attr_accessor :password
+  attr_accessible :name, :email, :address, :phone, :password, :password_confirmation
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   phone_regex = /\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})/i
 
@@ -12,4 +14,38 @@ class User < ActiveRecord::Base
                        :length   => { :maximum => 140 }
   validates :phone, :presence => true,
                     :format => { :with => phone_regex }
+  # Automatically create the virtual attribute 'password_confirmation'.
+  validates :password, :presence     => true,
+                       :confirmation => true,
+                       :length       => { :within => 6..40 }
+  before_save :encrypt_password
+  # Return true if the user's password matches the submitted password.
+  def has_password?(submitted_password)
+    encrypted_password == encrypt(submitted_password)
+  end
+
+  def self.authenticate(email, submitted_password)
+    user = find_by_email(email)
+    return nil  if user.nil?
+    return user if user.has_password?(submitted_password)
+  end
+
+  private
+
+    def encrypt_password
+      self.encrypted_password = encrypt(password)
+      self.encrypted_password = encrypt(password)
+    end
+
+    def encrypt(string)
+      secure_hash("#{salt}--#{string}")
+    end
+
+    def make_salt
+      secure_hash("#{Time.now.utc}--#{password}")
+    end
+
+    def secure_hash(string)
+      Digest::SHA2.hexdigest(string)
+    end
 end
